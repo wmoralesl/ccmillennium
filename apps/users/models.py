@@ -52,3 +52,6 @@ class User(AbstractUser):
     
     def __str__(self):
         return f'**** {self.username} ***** {self.id} - {self.first_name} {self.last_name} {self.second_last_name}'
+    
+    class Meta:
+        app_label = 'users'
