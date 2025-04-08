@@ -13,7 +13,7 @@ class LoginView(LoginView):
     def get_success_url(self):
         if not self.success_url:
             raise ValueError("No se ha configurado 'success_url'.")
-        # messages.success(self.request, 'Se ha iniciado sesión correctamente.')
+        messages.success(self.request, 'Se ha iniciado sesión correctamente.')
         return reverse(self.success_url)
     
     def form_invalid(self, form):
