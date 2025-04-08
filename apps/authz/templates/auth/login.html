@@ -3,5 +3,9 @@
     Inicio de sesión
 {% endblock %}
 {% block content %}
-login
+<form method="POST" class="form-signin">
+    {% csrf_token %}
+    {{form.as_p}}
+<button>Iniciar Sesion</button>
+</form>
 {% endblock %}
