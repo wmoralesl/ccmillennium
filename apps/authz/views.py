@@ -10,6 +10,12 @@ class LoginView(LoginView):
     template_name = 'auth/login.html'
     success_url = 'private:home'
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            # Redirigir si el usuario ya está autenticado
+            return redirect(self.get_success_url())
+        return super().dispatch(request, *args, **kwargs)
+
     def get_success_url(self):
         if not self.success_url:
             raise ValueError("No se ha configurado 'success_url'.")
