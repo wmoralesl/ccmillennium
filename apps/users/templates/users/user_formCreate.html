@@ -4,19 +4,26 @@
 {% block content %}
     <div>
         <h1>{{ view.object.pk|yesno:"Editar Usuario,Crear Usuario" }}</h1>
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate >
             {% csrf_token %}
             
             <div class="form-group">
                 <label for="{{ form.first_name.id_for_label }}" class="form-label">Nombres</label>
                 {{ form.first_name|add_class:"form-control"}}
+                <div class="invalid-feedback">
+                    Este campo es obligatorio.
+                </div>
             </div>
             <div class="row">
 
                 <div class="col form-group">
                     <label for="{{ form.last_name.id_for_label }}" class="form-label">Primer Apellido</label>
                     {{ form.last_name|add_class:"form-control" }}
+                    <div class="invalid-feedback">
+                        Este campo es obligatorio.
+                    </div>
                 </div>
+                
                 <div class="col">
                     <label for="{{ form.second_last_name.id_for_label }}" class="form-label">Segundo Apellido</label>
                 {{ form.second_last_name|add_class:"form-control" }}
@@ -80,4 +87,6 @@
 
     {% include 'auth/show_password.html' with buttonId="togglePassword1" passwordSelector="[name='password1']" iconId="togglePasswordIcon1" %}
     {% include 'auth/show_password.html' with buttonId="togglePassword2" passwordSelector="[name='password2']" iconId="togglePasswordIcon2" %}
+
+    {% include 'users/components/validator_form.html' %}
 {% endblock %}

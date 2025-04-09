@@ -18,10 +18,14 @@ def generate_unique_username(instance):
     """
     Genera un nombre de usuario único basado en el nombre, apellido y año actual.
     """
+    second_initial = ''
+    if instance.second_last_name and len(instance.second_last_name.strip()) > 0:
+        second_initial = instance.second_last_name.strip()[0].lower()
+
     base_username = (
-        instance.first_name[0].lower() + 
-        instance.last_name.lower() + 
-        (instance.second_last_name[0].lower() if instance.second_last_name else '') +
+        instance.first_name[0].lower() +
+        instance.last_name.lower() +
+        second_initial +
         str(now().year)[-2:]
     )
     username = base_username
@@ -32,6 +36,7 @@ def generate_unique_username(instance):
         counter += 1
 
     return username
+
 
 def validate_image(image):
     file_size = image.size
