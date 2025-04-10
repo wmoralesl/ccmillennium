@@ -10,10 +10,12 @@ class UserUpdateForm(forms.ModelForm):
             'birthdate': forms.DateInput(attrs={
                 'type': 'date',  
                 'class': 'form-control',  
-            }),
+            },
+             format='%Y-%m-%d'
+             ),
         }
 
-class CustomUserCreationForm(UserCreationForm):
+class UserCreateForm(forms.ModelForm):
     # email = forms.EmailField(required=True)
     date_of_birth = forms.DateField(
         widget=forms.DateInput(attrs={'type': 'date'}), 
@@ -21,7 +23,7 @@ class CustomUserCreationForm(UserCreationForm):
     
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'second_last_name', 'phone', 'birthdate', 'email', 'gender', 'password1', 'password2', 'role')
+        fields = ('first_name', 'last_name', 'second_last_name', 'phone', 'birthdate', 'email', 'gender', 'role')
 
     def clean_email(self):
         email = self.cleaned_data.get('email')

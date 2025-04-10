@@ -1,6 +1,6 @@
 from .forms import UserUpdateForm
 from users.models import User
-from apps.users.forms import CustomUserCreationForm
+from apps.users.forms import UserCreateForm
 from authz.mixins import ValidatePermissionRequiredMixin
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import redirect, render, get_object_or_404
@@ -47,7 +47,7 @@ class UserListView(LoginRequiredMixin, ListView):
 class UserCreateView(LoginRequiredMixin, CreateView):
     # permission_required = ['users.add_user']
     model = User
-    form_class = CustomUserCreationForm
+    form_class = UserCreateForm
     template_name = 'users/user_formCreate.html'
     success_url = reverse_lazy('users:list')
     raise_exception = False
@@ -78,16 +78,16 @@ class UserCreateView(LoginRequiredMixin, CreateView):
                 else:
                     messages.error(self.request, error)
 
-        if 'password2' in form.errors:
-            for error in form.errors['password2']:
-                if "do not match" in error:
-                    messages.error(self.request, 'Las contraseñas no coinciden.', extra_tags='error')
-                else:
-                    messages.error(self.request, 'Error en la contraseña: ' + error)
+        # if 'password2' in form.errors:
+        #     for error in form.errors['password2']:
+        #         if "do not match" in error:
+        #             messages.error(self.request, 'Las contraseñas no coinciden.', extra_tags='error')
+        #         else:
+        #             messages.error(self.request, 'Error en la contraseña: ' + error)
 
-        if 'password1' in form.errors:
-            for error in form.errors['password1']:
-                messages.error(self.request, 'Error en la contraseña: ' + error)
+        # if 'password1' in form.errors:
+        #     for error in form.errors['password1']:
+        #         messages.error(self.request, 'Error en la contraseña: ' + error)
 
         # Mensaje genérico en caso de otros errores
         if not form.errors:
