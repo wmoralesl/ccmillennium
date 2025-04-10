@@ -59,5 +59,12 @@ class User(AbstractUser):
     def __str__(self):
         return f'**** {self.username} ***** {self.id} - {self.first_name} {self.last_name} {self.second_last_name}'
     
+    def cleanImg(self):
+        if self.photo:
+            # self.photo.delete(save=False) 
+            self.photo = None   # Elimina referencia en DB
+            self.save()   
+
+    
     class Meta:
         app_label = 'users'

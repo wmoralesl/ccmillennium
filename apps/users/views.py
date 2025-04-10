@@ -139,7 +139,7 @@ def UserSoftDeleteView(request, pk):
         messages.error(request, 'No puedes eliminar un usuario administrador.', extra_tags='error')
         return redirect('users:view', pk=usuario.id)
 
-    usuario.soft_delete()
+    usuario.delete()
     # log_user_action(
     #     user=request.user,
     #     action="Desactivó un usuario",
@@ -161,3 +161,12 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     template_name = 'users/user_detail.html'
     raise_exception = False
     context_object_name = 'user'
+
+def ImageDeleteButton(request, pk):
+    if request.method != "POST":
+        return HttpResponseNotAllowed(['POST'])
+    
+    usuario = get_object_or_404(User, pk=pk)
+
+    usuario.cleanImg()
+    return redirect('users:list')
