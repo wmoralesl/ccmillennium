@@ -1,6 +1,7 @@
 from django import forms
 from users.models import User 
 from django.contrib.auth.forms import UserCreationForm
+from django.forms.widgets import ClearableFileInput
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:

@@ -8,8 +8,8 @@
 
   <li class="nav-item dropdown ms-auto">
     <a class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-      {% if user.photo %}
-      <img src="{{ user.photo.url }}" alt="Avatar" class="avatar">
+      {% if request.user.photo %}
+      <img src="{{ request.user.photo.url }}" alt="Avatar" class="avatar">
       {% else %}
       <img src="{% static 'img/untils/nophoto.jpg' %}" alt="Avatar"  class="avatar">
       {% endif %}
