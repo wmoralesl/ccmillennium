@@ -1,14 +1,30 @@
 {% extends "private/base.html" %}
 {% load widget_tweaks %}
-
+{% load static %}
 {% block content %}
-        <h1>Editando Usuario</h1>
+        <h3>Editando Usuario</h3>
+        
+
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="form-group">
-                <label for="{{ form.photo.id_for_label }}" class="form-label">Foto</label>
-                {{ form.photo|add_class:"form-control" }}
+            
+            <div class="d-flex align-items-center">
+                <div class="">
+                    {% if user.photo %}
+                        <img src="{{ user.photo.url }}" alt="Foto" class="avatar-md">
+                    {% else %}
+                        <img src="{% static 'img/untils/nophoto.jpg' %}" alt="Foto"  class="avatar-md">
+                    {% endif %}
+                </div>
+                <div class="">
+                    <div class="form-group ms-3">
+                        <label for="{{ form.photo.id_for_label }}" class="form-label">Subir una nueva foto</label>
+                        {{ form.photo|add_class:"form-control" }}
+                    </div>
+                </div>
             </div>
+            
+
             <div class="form-group">
                 <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
                 {{ form.username|add_class:"form-control" }}

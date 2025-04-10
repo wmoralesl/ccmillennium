@@ -14,6 +14,7 @@ class UserUpdateForm(forms.ModelForm):
             },
              format='%Y-%m-%d'
              ),
+             'photo': forms.FileInput(),
         }
 
 class UserCreateForm(forms.ModelForm):
