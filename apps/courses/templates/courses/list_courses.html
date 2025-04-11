@@ -1,11 +1,38 @@
 {% extends 'private/base.html' %}
-
+{% load static %}
 {% block content %}
 <h1>Cursos</h1>
 <a href="{% url 'courses:create' %}">crear</a>
-{% for curso in courses %}
-   <div class="">
-    <a href="{% url 'courses:view' curso.id %}">{{curso.name}}</a>
+<div class="row">
+
+
+{% for course in courses %}
+   <!-- <div class="">
+    <a href="{% url 'courses:view' course.id %}">{{course.name}}</a>
+   </div> -->
+
+   <div class="col-3">
+    <div class="card">
+        {% if course.banner %}
+        <img class="" src="{{ course.banner.url }}" alt="">
+        {% else %}
+        <img src="{% static 'img/untils/noimage.jpg' %}" alt="">
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title">
+                {{course.name}}
+            </h5>
+            <p class="card-text">
+                Texto
+            </p>
+           
+        </div>
+        <div class="card-footer">
+            <a class="w-100" href="{% url 'courses:view' course.id %}">{{course.name}}</a>
+        </div>
+       </div>
    </div>
 {% endfor %}
+</div>
+
 {% endblock %}

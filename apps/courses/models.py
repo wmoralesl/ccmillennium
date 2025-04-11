@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Course(models.Model):
-    photo = models.ImageField(upload_to='courses', null=True, blank=True)
+    banner = models.ImageField(upload_to='courses', null=True, blank=True)
     name = models.CharField(max_length=255)
     
     # Tarifas y pagos
