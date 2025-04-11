@@ -19,13 +19,22 @@ class UserUpdateForm(forms.ModelForm):
 
 class UserCreateForm(forms.ModelForm):
     # email = forms.EmailField(required=True)
-    date_of_birth = forms.DateField(
-        widget=forms.DateInput(attrs={'type': 'date'}), 
-    )
+    # date_of_birth = forms.DateField(
+    #     widget=forms.DateInput(attrs={'type': 'date'}), 
+    # )
     
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'second_last_name', 'phone', 'birthdate', 'email', 'gender', 'role')
+
+        widgets = {
+            'birthdate' : forms.DateInput(attrs={
+                'type': 'date',  
+                'class': 'form-control',  
+            },
+             format='%Y-%m-%d'
+             ),
+        }
 
     def clean_email(self):
         email = self.cleaned_data.get('email')

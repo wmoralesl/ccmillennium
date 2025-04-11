@@ -78,17 +78,6 @@ class UserCreateView(LoginRequiredMixin, CreateView):
                 else:
                     messages.error(self.request, error)
 
-        # if 'password2' in form.errors:
-        #     for error in form.errors['password2']:
-        #         if "do not match" in error:
-        #             messages.error(self.request, 'Las contraseñas no coinciden.', extra_tags='error')
-        #         else:
-        #             messages.error(self.request, 'Error en la contraseña: ' + error)
-
-        # if 'password1' in form.errors:
-        #     for error in form.errors['password1']:
-        #         messages.error(self.request, 'Error en la contraseña: ' + error)
-
         # Mensaje genérico en caso de otros errores
         if not form.errors:
             messages.error(self.request, 'No fue posible crear el usuario.', extra_tags='error')
@@ -153,7 +142,7 @@ def UserSoftDeleteView(request, pk):
     #     }
     # )
     messages.success(request, f"El usuario {usuario.email} ha sido eliminado correctamente.")
-    return redirect('users:list')
+    return redirect('users:view', kwargs={usuario.id})
 
 class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
