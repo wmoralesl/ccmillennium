@@ -1,0 +1,11 @@
+{% extends 'private/base.html' %}
+
+{% block content %}
+<h1>Crear curso</h1>
+<form action="" method="POST">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit">Aceptar</button>
+    <a href="{% url 'courses:list' %}">Regresar</a>
+</form>
+{% endblock %}

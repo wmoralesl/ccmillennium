@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>Cursos</h1>
-
+<a href="{% url 'courses:create' %}">crear</a>
 {% for curso in courses %}
     <p>{{curso.name}}</p>
 {% endfor %}
