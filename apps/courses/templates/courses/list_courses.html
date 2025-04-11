@@ -1,0 +1,9 @@
+{% extends 'private/base.html' %}
+
+{% block content %}
+<h1>Cursos</h1>
+
+{% for curso in courses %}
+    <p>{{curso.name}}</p>
+{% endfor %}
+{% endblock %}

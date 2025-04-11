@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'apps.users',
     'apps.authz',
     'apps.private',
+    'apps.courses',
 ]
 
 MIDDLEWARE = [

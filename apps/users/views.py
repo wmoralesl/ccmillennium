@@ -1,6 +1,5 @@
-from .forms import UserUpdateForm
+from users.forms import UserUpdateForm, UserCreateForm
 from users.models import User
-from apps.users.forms import UserCreateForm
 from authz.mixins import ValidatePermissionRequiredMixin
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import redirect, render, get_object_or_404

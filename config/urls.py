@@ -25,6 +25,7 @@ urlpatterns = [
     path('auth/', include('apps.authz.urls')),
     path('admin/', include('apps.private.urls')),
     path('admin/u/', include('apps.users.urls')),
+    path('admin/c/', include('apps.courses.urls')),
 ]
 
 if settings.DEBUG:
