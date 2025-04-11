@@ -38,7 +38,11 @@
     </div>
 
     <button type="submit">Aceptar</button>
-    <a href="{% url 'courses:list' %}">Regresar</a>
+    {% if course.id %}
+    <a href="{% url 'courses:view' course.id %}">Regresar al objeto</a>
+    {% else %}
+    <a href="{% url 'courses:list' %}">Regresar al listado</a>
+    {% endif %}
     <div class="invalid-feedback">
         Este campo es obligatorio.
     </div>

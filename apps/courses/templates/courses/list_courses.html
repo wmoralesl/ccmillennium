@@ -4,6 +4,8 @@
 <h1>Cursos</h1>
 <a href="{% url 'courses:create' %}">crear</a>
 {% for curso in courses %}
-    <p>{{curso.name}}</p>
+   <div class="">
+    <a href="{% url 'courses:view' curso.id %}">{{curso.name}}</a>
+   </div>
 {% endfor %}
 {% endblock %}
