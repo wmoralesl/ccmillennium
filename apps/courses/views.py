@@ -33,6 +33,13 @@ class CourseDetailView(DetailView):
     template_name = 'courses/detail_course.html'
     context_object_name = 'course'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        path = self.request.path
+        mipath = '/'.join(path.rstrip('/').split('/')[:-2]) + '/'
+        context['mipath'] = mipath # Para hacer el fetch al api-url correcta
+        return context
+
 # Modulos
 
 # @csrf_exempt  # para pruebas, mejor usa CSRF token en producción
@@ -44,9 +51,7 @@ def actualizar_nombre_modulo(request, modulo_id):
             return JsonResponse({'error': 'El nombre es obligatorio'}, status=400)
 
         modulo = get_object_or_404(Module, id=modulo_id)
-        print(modulo)
         modulo.name = nuevo_nombre
-        print(modulo.name)
         modulo.save()
 
         return JsonResponse({'mensaje': 'Nombre actualizado correctamente'})

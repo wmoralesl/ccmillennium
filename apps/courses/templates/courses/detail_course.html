@@ -19,6 +19,8 @@
     onclick="editname({{module.id}} , '{{module.name}}')">edit</span>
     </div>
     {% endfor %}
+    {{request.path}}
+    {{mipath}}
 
 </div>
 
@@ -58,7 +60,7 @@
             const nuevoNombre = result.value;
             console.log("Nuevo valor:", nuevoNombre);
 
-            fetch(`/admin/c/modulo/${moduleId}/actualizar-nombre/`, {
+            fetch(`{{mipath}}modulo/${moduleId}/actualizar-nombre/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
