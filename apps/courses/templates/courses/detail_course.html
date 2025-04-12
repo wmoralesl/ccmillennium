@@ -1,8 +1,20 @@
 {% extends 'private/base.html' %}
 
 {% block content %}
-<h2>Viendo obj</h2>
-{{course.name}}
+<div class="container mt-2">
+    <div class="card ">
+        <div class="card-header p-0">
+            <div style="height: 200px; background-size: cover; background-position: center; background-image: url({{course.banner.url}});"></div>     
+        </div>
+        <h4 class="card-title">{{course.name}}</h4>
+        <p>Mensualidad: {{course.monthly_fee}}</p>
+        <p>Cantidad de Pagos: {{course.total_payments}}</p>
+        <p>Costo de Inscripcion: {{course.enrollment_fee}}</p>
+    </div>
+
+</div>
+
+
 <a href="{% url 'courses:list' %}">Regresar al listado</a>
 <a href="{% url 'courses:edit' course.id %}">Editar</a>
 {% endblock %}
