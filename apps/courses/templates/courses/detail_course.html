@@ -121,9 +121,11 @@ const createModuleAlert = () => {
             .then(response => response.json())
             .then(data => {
                 if (data.mensaje) {
+                    location.reload();
                     Swal.fire('¡Actualizado!', data.mensaje, 'success');
                     // Aquí podrías actualizar el DOM con el nuevo nombre
                     // document.getElementById(`moduleName${moduleId}`).innerText = nuevoNombre;
+
                 } else {
                     Swal.fire('Error', data.error, 'error');
                 }

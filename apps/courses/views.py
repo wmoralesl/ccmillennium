@@ -4,9 +4,11 @@ from courses.models import Course, Module
 from courses.forms import CourseCreateForm
 from django.urls import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 import json
 from django.http import JsonResponse
+from django.contrib import messages
+
 # Create your views here.
 
 class CourseListView(ListView):
@@ -66,6 +68,8 @@ def createModule(request, course_id):
         print(data)
         print(courser)
         Module.objects.create(name=data.get('name'), course=courser)
+        messages.success(request, f"Modulo creado correctamente")
         return JsonResponse({'mensaje': 'Modulo creado correctamente'})
+        # return redirect('courses:view', pk = course_id)
         
 
