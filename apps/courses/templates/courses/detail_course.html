@@ -11,10 +11,76 @@
         <p>Cantidad de Pagos: {{course.total_payments}}</p>
         <p>Costo de Inscripcion: {{course.enrollment_fee}}</p>
     </div>
+    {% for module in course.module.all %}
+    <div>
+        <span id="moduleName{{module.id}}">{{module.name}}</span>
+    <span class="btn btn-link" id="editInput{{module.id}}"
+    onclick="editname({{module.id}} , '{{module.name}}')">edit</span>
+    </div>
+    {% endfor %}
 
 </div>
 
 
 <a href="{% url 'courses:list' %}">Regresar al listado</a>
 <a href="{% url 'courses:edit' course.id %}">Editar</a>
+<script>
+    function getCSRFToken() {
+    return document.querySelector('[name=csrfmiddlewaretoken]').value;
+    }
+    function editname(moduleId, moduleName){
+        const input = document.getElementById(`editInput${moduleId}`)
+        
+        if (!input){
+            console.error("No se ha encontrado")
+            return;
+        }
+        viewAlert(moduleId, moduleName)
+    }
+
+    function viewAlert(moduleId, moduleName) {
+    Swal.fire({
+        title: `Editando Módulo`,
+        input: 'text',
+        inputValue: moduleName,
+        inputPlaceholder: 'Ingresa el nuevo nombre',
+        showCancelButton: true,
+        confirmButtonText: 'Guardar',
+        cancelButtonText: 'Cancelar',
+        inputValidator: (value) => {
+            if (!value) {
+                return 'Debes ingresar un nombre';
+            }
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const nuevoNombre = result.value;
+            console.log("Nuevo valor:", nuevoNombre);
+
+            fetch(`/admin/c/modulo/${moduleId}/actualizar-nombre/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'X-CSRFToken': getCSRFToken()  // si decides usar CSRF token
+                },
+                body: JSON.stringify({ nombre: nuevoNombre })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.mensaje) {
+                    Swal.fire('¡Actualizado!', data.mensaje, 'success');
+                    // Aquí podrías actualizar el DOM con el nuevo nombre
+                    document.getElementById(`moduleName${moduleId}`).innerText = nuevoNombre;
+                } else {
+                    Swal.fire('Error', data.error, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire('Error', 'Hubo un problema al actualizar', 'error');
+            });
+        }
+    });
+}
+</script>
 {% endblock %}

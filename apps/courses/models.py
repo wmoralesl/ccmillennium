@@ -23,3 +23,10 @@ class Course(models.Model):
     
     class Meta:
         app_label = 'courses'
+
+class Module(models.Model):
+    name = models.CharField(max_length=256)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='module')
+
+    def __str__(self):
+        return f'{self.course.name} - {self.name}'

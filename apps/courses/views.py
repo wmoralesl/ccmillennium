@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView, DetailView
-from courses.models import Course
+from courses.models import Course, Module
 from courses.forms import CourseCreateForm
 from django.urls import reverse, reverse_lazy
-
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import get_object_or_404
+import json
+from django.http import JsonResponse
 # Create your views here.
 
 class CourseListView(ListView):
@@ -29,3 +32,22 @@ class CourseDetailView(DetailView):
     model = Course
     template_name = 'courses/detail_course.html'
     context_object_name = 'course'
+
+# Modulos
+
+@csrf_exempt  # para pruebas, mejor usa CSRF token en producción
+def actualizar_nombre_modulo(request, modulo_id):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        nuevo_nombre = data.get('nombre')
+
+        if not nuevo_nombre:
+            return JsonResponse({'error': 'El nombre es obligatorio'}, status=400)
+
+        modulo = get_object_or_404(Module, id=modulo_id)
+        modulo.nombre = nuevo_nombre
+        modulo.save()
+
+        return JsonResponse({'mensaje': 'Nombre actualizado correctamente'})
+    else:
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
