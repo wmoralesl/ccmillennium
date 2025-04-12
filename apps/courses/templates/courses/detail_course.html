@@ -28,20 +28,22 @@
 <a href="{% url 'courses:list' %}">Regresar al listado</a>
 <a href="{% url 'courses:edit' course.id %}">Editar</a>
 <script>
-    function getCSRFToken() {
+    const getCSRFToken = () => {
     return document.querySelector('[name=csrfmiddlewaretoken]').value;
     }
-    function editname(moduleId, moduleName){
-        const input = document.getElementById(`editInput${moduleId}`)
-        
+    
+    const editname = (moduleId, moduleName) => {
+        const input = document.getElementById(`editInput${moduleId}`);
+        const text = document.getElementById(`moduleName${moduleId}`).textContent;
+        console.log(text)
         if (!input){
             console.error("No se ha encontrado")
             return;
         }
-        viewAlert(moduleId, moduleName)
+        viewAlert(moduleId, text)
     }
 
-    function viewAlert(moduleId, moduleName) {
+    const viewAlert = (moduleId, moduleName) => {
     Swal.fire({
         title: `Editando Módulo`,
         input: 'text',
@@ -74,6 +76,7 @@
                     Swal.fire('¡Actualizado!', data.mensaje, 'success');
                     // Aquí podrías actualizar el DOM con el nuevo nombre
                     document.getElementById(`moduleName${moduleId}`).innerText = nuevoNombre;
+                    aux = nuevoNombre;
                 } else {
                     Swal.fire('Error', data.error, 'error');
                 }
