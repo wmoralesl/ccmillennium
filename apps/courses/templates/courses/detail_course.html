@@ -11,6 +11,7 @@
         <p>Cantidad de Pagos: {{course.total_payments}}</p>
         <p>Costo de Inscripcion: {{course.enrollment_fee}}</p>
     </div>
+    {% csrf_token %}
     {% for module in course.module.all %}
     <div>
         <span id="moduleName{{module.id}}">{{module.name}}</span>
@@ -61,7 +62,7 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // 'X-CSRFToken': getCSRFToken()  // si decides usar CSRF token
+                    'X-CSRFToken': getCSRFToken()  // si decides usar CSRF token
                 },
                 body: JSON.stringify({ nombre: nuevoNombre })
             })
