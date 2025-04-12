@@ -12,6 +12,9 @@
         <p>Costo de Inscripcion: {{course.enrollment_fee}}</p>
     </div>
     {% csrf_token %}
+    <div>
+        <button onclick="createModuleAlert()">Agregar nuevo modulo</button>
+    </div>
     {% for module in course.module.all %}
     <div>
         <span id="moduleName{{module.id}}">{{module.name}}</span>
@@ -40,10 +43,11 @@
             console.error("No se ha encontrado")
             return;
         }
-        viewAlert(moduleId, text)
+        updateModuleAlert(moduleId, text)
     }
 
-    const viewAlert = (moduleId, moduleName) => {
+// Editar Modulo
+const updateModuleAlert = (moduleId, moduleName) => {
     Swal.fire({
         title: `Editando Módulo`,
         input: 'text',
@@ -62,7 +66,7 @@
             const nuevoNombre = result.value;
             console.log("Nuevo valor:", nuevoNombre);
 
-            fetch(`{{mipath}}modulo/${moduleId}/actualizar-nombre/`, {
+            fetch(`{{mipath}}module/${moduleId}/update/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -76,7 +80,50 @@
                     Swal.fire('¡Actualizado!', data.mensaje, 'success');
                     // Aquí podrías actualizar el DOM con el nuevo nombre
                     document.getElementById(`moduleName${moduleId}`).innerText = nuevoNombre;
-                    aux = nuevoNombre;
+                } else {
+                    Swal.fire('Error', data.error, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire('Error', 'Hubo un problema al actualizar', 'error');
+            });
+        }
+    });
+}
+
+const createModuleAlert = () => {
+    Swal.fire({
+        title: `Creando Módulo`,
+        input: 'text',
+        inputPlaceholder: 'Ingresa el nombre',
+        showCancelButton: true,
+        confirmButtonText: 'Guardar',
+        cancelButtonText: 'Cancelar',
+        inputValidator: (value) => {
+            if (!value) {
+                return 'Debes ingresar un nombre';
+            }
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const nuevoNombre = result.value;
+            console.log("Nuevo valor:", nuevoNombre);
+            console.log('{{course.id}}')
+            fetch(`{{mipath}}module/{{course.id}}/create/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken()  // si decides usar CSRF token
+                },
+                body: JSON.stringify({ name: nuevoNombre })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.mensaje) {
+                    Swal.fire('¡Actualizado!', data.mensaje, 'success');
+                    // Aquí podrías actualizar el DOM con el nuevo nombre
+                    // document.getElementById(`moduleName${moduleId}`).innerText = nuevoNombre;
                 } else {
                     Swal.fire('Error', data.error, 'error');
                 }

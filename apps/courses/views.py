@@ -43,14 +43,14 @@ class CourseDetailView(DetailView):
 # Modulos
 
 # @csrf_exempt  # para pruebas, mejor usa CSRF token en producción
-def actualizar_nombre_modulo(request, modulo_id):
+def updateModule(request, module_id):
     if request.method == 'POST':
         data = json.loads(request.body)
         nuevo_nombre = data.get('nombre')
         if not nuevo_nombre:
             return JsonResponse({'error': 'El nombre es obligatorio'}, status=400)
 
-        modulo = get_object_or_404(Module, id=modulo_id)
+        modulo = get_object_or_404(Module, id=module_id)
         modulo.name = nuevo_nombre
         modulo.save()
 
@@ -58,3 +58,14 @@ def actualizar_nombre_modulo(request, modulo_id):
     else:
         
         return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+def createModule(request, course_id):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        courser = get_object_or_404(Course, id=course_id)
+        print(data)
+        print(courser)
+        Module.objects.create(name=data.get('name'), course=courser)
+        return JsonResponse({'mensaje': 'Modulo creado correctamente'})
+        
+
