@@ -17,17 +17,23 @@
     </li>
 
     <li class="nav-item">
+      <a href="{% url 'groups:list' %}" class="nav-link  {% if '/g/' in request.path %}active{% endif %}">
+        <i class="bi bi-people me-2"></i> Grupos
+      </a>
+    </li>
+
+    <li class="nav-item">
       <a href="{% url 'courses:list' %}" class="nav-link  {% if '/c/' in request.path %}active{% endif %}">
-        <i class="bi bi-people me-2"></i> Cursos
+        <i class="bi bi-book me-2"></i> Cursos
       </a>
     </li>
     
     <li class="nav-item">
       <a href="{% url 'users:list' %}" class="nav-link  {% if '/u/' in request.path %}active{% endif %}">
-        <i class="bi bi-people me-2"></i> Usuarios
+        <i class="bi bi-person-workspace me-2"></i> Usuarios
       </a>
     </li>
-    
+
     <li class="nav-item">
       <a href="#" class="nav-link  {% if '/config/' in request.path %}active{% endif %}">
         <i class="bi bi-gear me-2"></i> Configuración
