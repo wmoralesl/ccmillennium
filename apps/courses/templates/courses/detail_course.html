@@ -11,7 +11,6 @@
         <p>Cantidad de Pagos: {{course.total_payments}}</p>
         <p>Costo de Inscripcion: {{course.enrollment_fee}}</p>
     </div>
-    {% csrf_token %}
     <div>
         <button onclick="createModuleAlert()">Agregar nuevo modulo</button>
     </div>
@@ -20,10 +19,16 @@
         <span id="moduleName{{module.id}}">{{module.name}}</span>
     <span class="btn btn-link" id="editInput{{module.id}}"
     onclick="editname({{module.id}} , '{{module.name}}')">edit</span>
+    
+    <form id="deleteForm{{module.id}}" action="{% url 'courses:delete-module' course.id module.pk %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="button" class="btn btn-danger" onclick="confirmDelete({{module.id}})">Eliminar</button>
+    </form>
     </div>
     {% endfor %}
     {{request.path}}
     {{mipath}}
+
 
 </div>
 
@@ -137,5 +142,24 @@ const createModuleAlert = () => {
         }
     });
 }
+
+const confirmDelete = (moduleId) => {
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "Esta acción no se puede deshacer",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById(`deleteForm${moduleId}`).submit();
+        }
+    });
+}
+
+
 </script>
 {% endblock %}

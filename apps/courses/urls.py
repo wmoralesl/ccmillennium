@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import CourseListView, CourseCreateView, CourseEditView, CourseDetailView, updateModule, createModule
+from .views import CourseListView, CourseCreateView, CourseEditView, CourseDetailView, updateModule, createModule, deleteModule
 
 app_name = 'courses'
 
@@ -9,7 +9,7 @@ urlpatterns = [
     path('edit/<int:pk>/', CourseEditView.as_view(), name='edit'),
     path('view/<int:pk>/', CourseDetailView.as_view(), name='view'),
     path('module/<int:module_id>/update/', updateModule, name='update-module'),
+    path('module/<int:course_id>/<int:module_id>/delete/', deleteModule, name='delete-module'),
     path('module/<int:course_id>/create/', createModule, name='create-module'),
-
 
 ]

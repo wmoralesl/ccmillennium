@@ -71,5 +71,11 @@ def createModule(request, course_id):
         messages.success(request, f"Modulo creado correctamente")
         return JsonResponse({'mensaje': 'Modulo creado correctamente'})
         # return redirect('courses:view', pk = course_id)
+
+def deleteModule(request, course_id, module_id):
+    if request.method == 'POST':
+        module = get_object_or_404(Module, pk=module_id)
+        module.delete()
+        return redirect('courses:view', pk = course_id)
         
 
