@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'apps.private',
     'apps.courses',
     'apps.groups',
+    'apps.payments',
 ]
 
 MIDDLEWARE = [

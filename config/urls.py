@@ -27,6 +27,7 @@ urlpatterns = [
     path('admin/u/', include('apps.users.urls')),
     path('admin/c/', include('apps.courses.urls')),
     path('admin/g/', include('apps.groups.urls')),
+    path('admin/p/', include('apps.payments.urls')),
 ]
 
 if settings.DEBUG:
