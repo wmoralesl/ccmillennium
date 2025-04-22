@@ -4,7 +4,13 @@
 <div class="container mt-2">
     <div class="card ">
         <div class="card-header p-0">
+            {% if course.banner %}
             <div style="height: 200px; background-size: cover; background-position: center; background-image: url({{course.banner.url}});"></div>     
+
+            {% else %}
+            <div style="height: 200px; background-size: cover; background-position: center; background-color: rgb(131, 131, 131);"></div>     
+
+            {% endif %}
         </div>
         <h4 class="card-title">{{course.name}}</h4>
         <p>Mensualidad: {{course.monthly_fee}}</p>

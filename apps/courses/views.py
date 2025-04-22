@@ -22,13 +22,20 @@ class CourseCreateView(CreateView):
     template_name = 'courses/form_course.html'
     success_url = reverse_lazy('courses:list')
 
+    def form_valid(self, form):
+        messages.success(self.request,'Se ha creado el curso correctamente')
+        return super().form_valid(form)
+    
 class CourseEditView(UpdateView):
     model = Course
     form_class = CourseCreateForm
     template_name = 'courses/form_course.html'
 
     def get_success_url(self):
+        messages.success(self.request, 'Se ha actualizado el curso correctamente')
         return reverse('courses:view', kwargs={'pk': self.object.id})
+    
+    
 
 class CourseDetailView(DetailView):
     model = Course
