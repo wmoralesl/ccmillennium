@@ -1,4 +1,5 @@
 {% extends 'private/base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container mt-2">
@@ -12,26 +13,33 @@
 
             {% endif %}
         </div>
-        <h4 class="card-title">{{course.name}}</h4>
-        <p>Mensualidad: {{course.monthly_fee}}</p>
-        <p>Cantidad de Pagos: {{course.total_payments}}</p>
-        <p>Costo de Inscripcion: {{course.enrollment_fee}}</p>
+        <h4 class="card-title py-3 text-center">{{course.name}}</h4>
+
+        <ul class="nav nav-tabs" id="courseTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab">Información</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="proyectos-tab" data-bs-toggle="tab" data-bs-target="#module" type="button" role="tab">Modulos</button>
+            </li>
+        </ul>
+        
+
+        <div class="tab-content p-4 border border-top-0" id="courseTabsContent">
+            <div class="tab-pane fade show active" id="info" role="tabpanel">
+                <p>Mensualidad: {{course.monthly_fee}}</p>
+                <p>Cantidad de Pagos: {{course.total_payments}}</p>
+                <p>Costo de Inscripcion: {{course.enrollment_fee}}</p>
+                
+            </div>
+            <div class="tab-pane fade" id="module" role="tabpanel">
+                {% include 'courses/components/modules.html' %}
+            </div>
+        
+        </div>
+        
     </div>
-    <div>
-        <button onclick="createModuleAlert()">Agregar nuevo modulo</button>
-    </div>
-    {% for module in course.module.all %}
-    <div>
-        <span id="moduleName{{module.id}}">{{module.name}}</span>
-    <span class="btn btn-link" id="editInput{{module.id}}"
-    onclick="editname({{module.id}} , '{{module.name}}')">edit</span>
-    
-    <form id="deleteForm{{module.id}}" action="{% url 'courses:delete-module' course.id module.pk %}" method="post" style="display:inline;">
-        {% csrf_token %}
-        <button type="button" class="btn btn-danger" onclick="confirmDelete({{module.id}})">Eliminar</button>
-    </form>
-    </div>
-    {% endfor %}
+   
     {{request.path}}
     {{mipath}}
 
@@ -41,6 +49,10 @@
 
 <a href="{% url 'courses:list' %}">Regresar al listado</a>
 <a href="{% url 'courses:edit' course.id %}">Editar</a>
+
+{% endblock %}
+
+{% block script %}
 <script>
     const getCSRFToken = () => {
     return document.querySelector('[name=csrfmiddlewaretoken]').value;

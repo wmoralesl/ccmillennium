@@ -1,0 +1,15 @@
+<div>
+    <button onclick="createModuleAlert()">Agregar nuevo modulo</button>
+</div>
+{% for module in course.module.all %}
+<div>
+    <span id="moduleName{{module.id}}">{{module.name}}</span>
+<span class="btn btn-link" id="editInput{{module.id}}"
+onclick="editname({{module.id}} , '{{module.name}}')">edit</span>
+
+<form id="deleteForm{{module.id}}" action="{% url 'courses:delete-module' course.id module.pk %}" method="post" style="display:inline;">
+    {% csrf_token %}
+    <button type="button" class="btn btn-danger" onclick="confirmDelete({{module.id}})">Eliminar</button>
+</form>
+</div>
+{% endfor %}
